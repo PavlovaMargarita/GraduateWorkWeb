@@ -1,0 +1,243 @@
+body {
+    background: url("../images/background.png") repeat;
+}
+
+.content {
+    padding-top: 2%;
+    padding-bottom: 5%;
+}
+
+.box {
+    margin-bottom: 40pt;
+    width: 100%;
+}
+
+.box h3 {
+    color: gray;
+    font-size: 14pt;
+    font-weight: bold;
+    text-align: right;
+}
+
+
+.box b {
+    color: red;
+}
+
+.box label, #modal-phone span {
+    color: #b92c28;
+    float: right;
+    display: none;
+    font-weight: bold;
+    font-size: 10pt;
+}
+
+.page-title {
+    padding-bottom: 2%;
+}
+
+.page-title h2 {
+    color: deepskyblue;
+    font-weight: bold;
+}
+
+.main-label {
+    color: #b92c28;
+    display: none;
+    font-size: 14pt;
+}
+
+.contact-list .page-menu, .order-list .page-menu, .user-list .page-menu, .settings .page-menu {
+    text-align: center;
+}
+
+.contact, .contact-list, .contact-search, .order-list, .order-search, .order, .user, .user-list, .settings {
+    min-width: 100%;
+    max-width: 100%;
+    padding-left:  5%;
+    padding-right: 5%;
+}
+
+.contact .button-save-div {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.contact .contact-information, .user-information, .contact-search-information, .order-search-information, .order-information {
+    margin: 0 auto;
+    width: 400pt;
+    text-align: center;
+}
+
+.contact .input-group, .user-information .input-group, .contact-search-information .input-group, .order-search-information .input-group, .order-information .input-group {
+    width: 100%;
+    margin-top: 10pt;
+    margin-bottom: 10pt;
+}
+
+.contact .input-group-addon, .user-information .input-group-addon, .contact-search-information .input-group-addon, .order-search-information .input-group-addon, .order-information .input-group-addon {
+    width: 140pt;
+    color: white;
+    font-weight: bold;
+    background-image: -webkit-linear-gradient(top,#5cb85c 0,#419641 100%);
+    background-image: -o-linear-gradient(top,#5cb85c 0,#419641 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#5cb85c),to(#419641));
+    background-image: linear-gradient(to bottom,#5cb85c 0,#419641 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5cb85c', endColorstr='#ff419641', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    background-repeat: repeat-x;
+    border-color: #3e8f3e;
+}
+
+.contact .btn-group, .contact-list .btn-group, .user-list .btn-group  {
+    margin-bottom: 10pt;
+}
+
+.modal {
+    text-align: left;
+}
+
+.modal-header {
+    color: white;
+    -moz-border-radius-topleft: 6px;
+    -moz-border-radius-topright: 6px;
+    -webkit-border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    background-image: -webkit-linear-gradient(top,#5bc0de 0,#2aabd2 100%);
+    background-image: -o-linear-gradient(top,#5bc0de 0,#2aabd2 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#5bc0de),to(#2aabd2));
+    background-image: linear-gradient(to bottom,#5bc0de 0,#2aabd2 100%);
+    border-color: #28a4c9;
+}
+
+.authorization .div-error {
+    color: #b92c28;
+    font-weight: bold;
+    text-align: center;
+}
+
+.authorization .container {
+    margin-top: 5%;
+    width: 400px;
+    padding: 30px;
+}
+
+.authorization .form-control {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.authorization .btn-primary {
+    width: 100%;
+}
+
+#phone-table img {
+    width: 15pt;
+    cursor: hand;
+}
+
+.overlay {
+    visibility: hidden;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    text-align:center;
+    z-index: 899999;
+}
+
+#errorMessage{
+    margin: 50px;
+    white-space: pre-wrap;
+}
+
+.errorPopup{
+    width: 400px;
+    height: 200px;
+    margin: 100px auto;
+    background-color: #fff;
+    border:1px solid;
+    z-index:900000;
+    max-width: 450px;
+    border-radius: 9px;
+}
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 2s, opacity 2s linear;
+}
+
+.employee-photo{
+    width: 30%;
+    margin-left: 19%;
+}
+.button-add-photo {
+    width: 30%;
+    margin-right: 19%;
+}
+.div-employee-service-form {
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+.button-save-delete {
+    width: 20%;
+    margin-left: 40%;
+    margin-right: 40%;
+}
+
+.label-font-size{
+    font-size: 0.8vw;
+}
+.input-size{
+    font-size: 0.8vw;
+    height: 1.6vw;
+    padding-bottom: 0.1vw;
+    padding-top: 0.1vw;
+}
+
+.button-style{
+    height: 1.8vw;
+    font-size: 0.8vw;
+    padding-bottom: 0.1vw;
+    padding-top: 0.1vw;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+}
+.parent {
+    display: table;
+    table-layout: fixed;
+}
+
+.child {
+    display:table-cell;
+    vertical-align:middle;
+    text-align:center;
+}
+
+.error-font{
+    color: red;
+    font-weight: bold;
+}
+
+.img-navbar{
+    height: 50px;
+}
+
+tr.red-color{
+    background-color: #dca7a7!important;
+}
+
+tr.red-color:hover{
+    background-color: #e7c3c3!important;
+}
+
+.button-glyphicon-calendar-height{
+    height: 34px;
+}
