@@ -3,6 +3,8 @@ app.controller("MyController", function ($scope, $http, $location, $rootScope, $
 
     $scope.inputFile = {};
     $scope.isLoaded = false;
+    $scope.similarImages = [];
+    $scope.findSimilarImages = true;
 
     var maxWidth = 500;
     var maxHeight = 500;
@@ -27,11 +29,11 @@ app.controller("MyController", function ($scope, $http, $location, $rootScope, $
             headers: {'Content-Type': undefined},
             accepts: "application/json; charset=utf-8"
         }).success(function (data, status) {
-            alert("Success");
+            $scope.similarImages = data;
         }).error(function (data, status) {
             alert("Error");
         });
-    }
+    };
 
 
 
@@ -42,6 +44,13 @@ app.controller("MyController", function ($scope, $http, $location, $rootScope, $
     //    //alert("Error ... " + status);
     //});
 
+    $scope.findSimilarImagesClick = function(){
+        $scope.findSimilarImages = true;
+    };
+
+    $scope.retrieveFaceClick = function(){
+        $scope.findSimilarImages = false;
+    };
 });
 
 app.directive("ngFileSelect",function(){

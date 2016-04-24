@@ -34,26 +34,46 @@
 
 <div ng-controller="MyController">
 
-hello
+    <div class="col-md-12">
+        <button type="button" class="btn col-md-6 btn-primary" ng-click="findSimilarImagesClick()">
+            Find similar images
+        </button>
+        <button type="button" class="btn col-md-6 btn-success" ng-click="retrieveFaceClick()">
+            Select face
+        </button>
 
-    <div>
-        <div>
-            <form>
-                <input type="file" ng-file-select="onFileSelect($files)" >
-                <!--  <input type="file" ng-file-select="onFileSelect($files)" multiple> -->
+        <div ng-show="findSimilarImages" style="padding-top:10px">
+            <h2 style="text-align: center">Find Similar Images</h2>
+            <div class="col-md-6">
+                <form>
+                    <div class="fileUpload btn btn-warning">
+                        <span>Select Image</span>
+                        <input type="file" class="upload" ng-file-select="onFileSelect($files)">
+                    </div>
+                    <button type="button" class="btn btn-warning" ng-click="findSimilar()">Find similar</button>
+                </form>
+                <div class="imageclass" style="float: left; width: 500px; height: 500px;">
+                    <img id="image" ng-src="{{imageSrc}}" ng-show="isLoaded"/><br/>
+                </div>
 
-            </form>
-            <div class="imageclass" style="float: left; width: 500px; height: 500px;">
-                <img id="image" ng-src="{{imageSrc}}" ng-show="isLoaded"/><br/>
+
             </div>
 
-            <button type="button" ng-click="findSimilar()">Find similar</button>
+            <div class="col-md-6">
+                <div ng-repeat="image in similarImages">
+                    <div class="square" ng-style="{'background-image': 'url({{image.url}})'}">
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-        <div>
-
+        <div ng-show="!findSimilarImages">
+            select face
         </div>
     </div>
+
+
 </div>
 </body>
 </html>

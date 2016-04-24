@@ -55,4 +55,12 @@ public class Utils {
         }
         return pixels;
     }
+
+    public static String arrayToString(int [] array){
+        StringBuilder result = new StringBuilder("");
+        for(int a : array){
+            result.append(a);
+        }
+        return result.toString();
+    }
 }
