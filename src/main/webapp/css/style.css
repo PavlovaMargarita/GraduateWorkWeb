@@ -249,7 +249,7 @@ tr.red-color:hover{
 }
 
 .imageclass img {
-    width: 100%; /* Will shrink image to 30% of its original width */
+    width: 65%; /* Will shrink image to 30% of its original width */
     height: auto;
 }
 
@@ -279,4 +279,8 @@ tr.red-color:hover{
     cursor: pointer;
     opacity: 0;
     filter: alpha(opacity=0);
+}
+
+h2{
+    padding-top: 25px;
 }

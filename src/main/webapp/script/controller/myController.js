@@ -29,6 +29,11 @@ app.controller("MyController", function ($scope, $http, $location, $rootScope, $
     }
 
     $scope.findSimilar = function(){
+        if(!$scope.file){
+            alert("Select image");
+            return;
+        }
+
         var formData = new FormData();
         formData.append("file", $scope.file);
         $http.post(host + '/request/findSimilar', formData, {
@@ -54,7 +59,8 @@ app.controller("MyController", function ($scope, $http, $location, $rootScope, $
             headers: {'Content-Type': undefined},
             accepts: "application/json; charset=utf-8"
         }).success(function (data, status) {
-            $scope.retrieveFaceOutputImageUrl = data;
+            $scope.retrieveFaceOutputImageUrl1 = data[0];
+            $scope.retrieveFaceOutputImageUrl2 = data[1];
         }).error(function (data, status) {
             alert("Error");
         });

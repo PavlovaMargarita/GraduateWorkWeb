@@ -66,6 +66,8 @@ public class ImageController {
     @RequestMapping(value="/retrieveFace", method = RequestMethod.POST)
     public @ResponseBody
     String retrieveFace(@RequestParam(value = "file", required = true) MultipartFile file) throws Exception {
-        return iImageSearchService.retrieveFace(file);
+        List<String> result = iImageSearchService.retrieveFace(file);
+        String json = new Gson().toJson(result);
+        return json;
     }
 }

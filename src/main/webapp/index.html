@@ -34,7 +34,7 @@
 
 <div ng-controller="MyController">
 
-    <div class="col-md-12">
+    <div class="col-md-12" id="panel">
         <button type="button" class="btn col-md-6 btn-primary" ng-click="findSimilarImagesClick()">
             Find Similar Images
         </button>
@@ -82,7 +82,14 @@
             </div>
 
             <div class="col-md-6">
-                <img ng-src="{{retrieveFaceOutputImageUrl}}">
+                <h3> Viola-Jons </h3>
+                <div class="imageclass" style="float: left;">
+                    <img ng-src="{{retrieveFaceOutputImageUrl1}}">
+                </div>
+                <h3>Other</h3>
+                <div class="imageclass" style="float: left;">
+                    <img ng-src="{{retrieveFaceOutputImageUrl2}}">
+                </div>
             </div>
         </div>
     </div>

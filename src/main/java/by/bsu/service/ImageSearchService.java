@@ -20,10 +20,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 @Component
 public class ImageSearchService implements IImageSearchService {
@@ -63,12 +60,13 @@ public class ImageSearchService implements IImageSearchService {
     }
 
     @Override
-    public String retrieveFace(MultipartFile file) throws IOException {
+    public List<String> retrieveFace(MultipartFile file) throws IOException {
 
         BufferedImage bi = ImageIO.read(file.getInputStream());
         File outputfile = new File("tempfile.jpg");
         ImageIO.write(bi, "jpg", outputfile);
         Mat image = Highgui.imread("tempfile.jpg");
+        Mat image2 = Highgui.imread("tempfile.jpg");
 
         // Detect faces in the image.
         // MatOfRect is a special container class for Rect.
@@ -81,9 +79,14 @@ public class ImageSearchService implements IImageSearchService {
             Core.rectangle(image, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height), new Scalar(0, 255, 0));
         }
 
+        for(int i = 0; i < faceDetections.toArray().length; i += 2){
+            Rect rect = faceDetections.toArray()[i];
+            Core.rectangle(image2, new Point(rect.x-5, rect.y-7), new Point(rect.x + rect.width + 8, rect.y + rect.height+ 3), new Scalar(0, 255, 0));
+        }
+
         // Save the visualized detection.
-        String filename = "faceDetection.jpg";
-        Highgui.imwrite(filename, image);
+        Highgui.imwrite("faceDetection.jpg", image);
+        Highgui.imwrite("faceDetection2.jpg", image2);
 
         //load file to cloudinary
         Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
@@ -91,8 +94,12 @@ public class ImageSearchService implements IImageSearchService {
                 "api_key", "593791151728485",
                 "api_secret", "yU_xhmPOozFfRQa3izDzT3sIFmE"));
         Map uploadResult = cloudinary.uploader().upload(new File("faceDetection.jpg"), null);
+        Map uploadResult2 = cloudinary.uploader().upload(new File("faceDetection2.jpg"), null);
 
-        return uploadResult.get("url").toString();
+        List<String> result = new ArrayList<>(2);
+        result.add(uploadResult.get("url").toString());
+        result.add(uploadResult2.get("url").toString());
+        return result;
     }
 
     private int [] hashToArray(String hash){
