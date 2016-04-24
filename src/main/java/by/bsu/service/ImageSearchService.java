@@ -4,16 +4,24 @@ import by.bsu.Utils;
 import by.bsu.algorithm.search.Hash;
 import by.bsu.algorithm.search.PHash;
 import by.bsu.model.ImageInformation;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.opencv.core.*;
+import org.opencv.highgui.Highgui;
+import org.opencv.objdetect.CascadeClassifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -22,6 +30,8 @@ public class ImageSearchService implements IImageSearchService {
 
     @Autowired
     SessionFactory sessionFactory;
+
+    static{ System.loadLibrary(Core.NATIVE_LIBRARY_NAME); }
 
     @Override
     public Set<ImageInformation> findSimilarImage(MultipartFile file) throws Exception {
@@ -50,6 +60,39 @@ public class ImageSearchService implements IImageSearchService {
         imageInformation.setUrl("test");
         result.add(imageInformation);
         return result;
+    }
+
+    @Override
+    public String retrieveFace(MultipartFile file) throws IOException {
+
+        BufferedImage bi = ImageIO.read(file.getInputStream());
+        File outputfile = new File("tempfile.jpg");
+        ImageIO.write(bi, "jpg", outputfile);
+        Mat image = Highgui.imread("tempfile.jpg");
+
+        // Detect faces in the image.
+        // MatOfRect is a special container class for Rect.
+        MatOfRect faceDetections = new MatOfRect();
+        CascadeClassifier faceDetector = new CascadeClassifier(getClass().getResource("/haarcascade_frontalface_alt.xml").getPath().substring(1));
+        faceDetector.detectMultiScale(image, faceDetections);
+
+        // Draw a bounding box around each face.
+        for (Rect rect : faceDetections.toArray()) {
+            Core.rectangle(image, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height), new Scalar(0, 255, 0));
+        }
+
+        // Save the visualized detection.
+        String filename = "faceDetection.jpg";
+        Highgui.imwrite(filename, image);
+
+        //load file to cloudinary
+        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "graduatework",
+                "api_key", "593791151728485",
+                "api_secret", "yU_xhmPOozFfRQa3izDzT3sIFmE"));
+        Map uploadResult = cloudinary.uploader().upload(new File("faceDetection.jpg"), null);
+
+        return uploadResult.get("url").toString();
     }
 
     private int [] hashToArray(String hash){

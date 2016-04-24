@@ -36,10 +36,10 @@
 
     <div class="col-md-12">
         <button type="button" class="btn col-md-6 btn-primary" ng-click="findSimilarImagesClick()">
-            Find similar images
+            Find Similar Images
         </button>
         <button type="button" class="btn col-md-6 btn-success" ng-click="retrieveFaceClick()">
-            Select face
+            Retrieve Face
         </button>
 
         <div ng-show="findSimilarImages" style="padding-top:10px">
@@ -47,7 +47,7 @@
             <div class="col-md-6">
                 <form>
                     <div class="fileUpload btn btn-warning">
-                        <span>Select Image</span>
+                        <span>Load Image</span>
                         <input type="file" class="upload" ng-file-select="onFileSelect($files)">
                     </div>
                     <button type="button" class="btn btn-warning" ng-click="findSimilar()">Find similar</button>
@@ -55,8 +55,6 @@
                 <div class="imageclass" style="float: left; width: 500px; height: 500px;">
                     <img id="image" ng-src="{{imageSrc}}" ng-show="isLoaded"/><br/>
                 </div>
-
-
             </div>
 
             <div class="col-md-6">
@@ -69,10 +67,25 @@
         </div>
 
         <div ng-show="!findSimilarImages">
-            select face
+            <h2 style="text-align: center"> Retrieve Face </h2>
+            <div class="col-md-6">
+                <form>
+                    <div class="fileUpload btn btn-warning">
+                        <span>Load Image</span>
+                        <input type="file" class="upload" ng-file-select="onFileSelect($files)">
+                    </div>
+                    <button type="button" class="btn btn-warning" ng-click="retrieveFace()">Retrieve Face</button>
+                </form>
+                <div class="imageclass" style="float: left; width: 500px; height: 500px;">
+                    <img id="retrieveFaceInputImage" ng-src="{{retrieveFaceImageSrc}}" ng-show="isLoaded"/><br/>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <img ng-src="{{retrieveFaceOutputImageUrl}}">
+            </div>
         </div>
     </div>
-
 
 </div>
 </body>

@@ -35,22 +35,9 @@ public class ImageController {
     @Autowired
     IImageSearchService iImageSearchService;
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    @Transactional
-    @ResponseBody
-    public void addImageInformation(){
-        Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        ImageInformation imageInformation = new ImageInformation();
-        imageInformation.setHash("101");
-        imageInformation.setUrl("test");
-        session.save(imageInformation);
-        session.getTransaction().commit();
-    }
-
     @RequestMapping(value="/findSimilar", method = RequestMethod.POST)
     public @ResponseBody
-    String UploadFile(@RequestParam(value="file", required=true) MultipartFile file) throws Exception {
+    String findSimilarImages(@RequestParam(value = "file", required = true) MultipartFile file) throws Exception {
         List<ImageInformation> result = new ArrayList(iImageSearchService.findSimilarImage(file));
         String json = new Gson().toJson(result);
         return json;
@@ -76,4 +63,9 @@ public class ImageController {
 //        return "test";
     }
 
+    @RequestMapping(value="/retrieveFace", method = RequestMethod.POST)
+    public @ResponseBody
+    String retrieveFace(@RequestParam(value = "file", required = true) MultipartFile file) throws Exception {
+        return iImageSearchService.retrieveFace(file);
+    }
 }

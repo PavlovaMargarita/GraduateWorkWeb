@@ -5,19 +5,28 @@ app.controller("MyController", function ($scope, $http, $location, $rootScope, $
     $scope.isLoaded = false;
     $scope.similarImages = [];
     $scope.findSimilarImages = true;
+    $scope.retrieveFaceOutputImageUrl = "";
 
     var maxWidth = 500;
     var maxHeight = 500;
 
     $scope.getFile = function () {
         $scope.isLoaded = false;
-        $scope.progress = 0;
         fileReader.readAsDataUrl($scope.file, $scope)
             .then(function(result) {
                 $scope.imageSrc = result;
                 $scope.isLoaded = true;
             });
     };
+
+    $scope.retrieveFaceGetFile = function (){
+        $scope.isLoaded = false;
+        fileReader.readAsDataUrl($scope.file, $scope)
+            .then(function(result) {
+                $scope.retrieveFaceImageSrc = result;
+                $scope.isLoaded = true;
+            });
+    }
 
     $scope.findSimilar = function(){
         var formData = new FormData();
@@ -35,6 +44,21 @@ app.controller("MyController", function ($scope, $http, $location, $rootScope, $
         });
     };
 
+    $scope.retrieveFace = function(){
+        var formData = new FormData();
+        formData.append("file", $scope.file);
+        $http.post(host + '/request/retrieveFace', formData, {
+            transformRequest: function (data, headersGetterFunction) {
+                return data;
+            },
+            headers: {'Content-Type': undefined},
+            accepts: "application/json; charset=utf-8"
+        }).success(function (data, status) {
+            $scope.retrieveFaceOutputImageUrl = data;
+        }).error(function (data, status) {
+            alert("Error");
+        });
+    };
 
 
 
@@ -61,7 +85,11 @@ app.directive("ngFileSelect",function(){
             el.bind("change", function(e){
 
                 $scope.file = (e.srcElement || e.target).files[0];
-                $scope.getFile();
+                if($scope.findSimilarImages) {
+                    $scope.getFile();
+                } else {
+                    $scope.retrieveFaceGetFile();
+                }
             })
 
         }
