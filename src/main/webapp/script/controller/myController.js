@@ -1,55 +1,63 @@
-app.controller("MyController", function ($scope, $http, $location, $rootScope, $cookieStore) {
-    $scope.txtData = "";
-    $scope.txtFile;
-    $scope.texData = "";
+var host = "/image/rest";
+app.controller("MyController", function ($scope, $http, $location, $rootScope, $cookieStore, fileReader) {
 
-    $http.get('/rest/add').success(function (data, status) {
-        $scope.texData = data;
-    }).error(function (data, status) {
-        //alert("Error ... " + status);
-    });
+    $scope.inputFile = {};
+    $scope.isLoaded = false;
 
+    var maxWidth = 500;
+    var maxHeight = 500;
 
-    $scope.onFileSelect = function($files) {
-        for (var i = 0; i < $files.length; i++) {
-            var file = $files[i];
-            $scope.txtFile = file;
-            var r = new FileReader();
-            r.onload = function (e) {
-                var contents = e.target.result;
-                $scope.txtData = contents;
-                $scope.$apply();
-
-            };
-            r.readAsText(file);
-        };
-
-        $scope.convert = function () {
-            var formData = new FormData();
-            formData.append("file", $scope.txtFile);
-            $http.post(host + '/request/parseFile', formData, {
-                transformRequest: function (data, headersGetterFunction) {
-                    return data;
-                },
-                headers: {'Content-Type': undefined}
-            }).success(function (data, status) {
-                $scope.texData = data;
-            }).error(function (data, status) {
-                alert("Error ... " + status);
+    $scope.getFile = function () {
+        $scope.isLoaded = false;
+        $scope.progress = 0;
+        fileReader.readAsDataUrl($scope.file, $scope)
+            .then(function(result) {
+                $scope.imageSrc = result;
+                $scope.isLoaded = true;
             });
-        };
+    };
 
-        $scope.download = function () {
-            var element = document.createElement('a');
-            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent($scope.texData));
-            element.setAttribute('download', "output.tex");
-
-            element.style.display = 'none';
-            document.body.appendChild(element);
-
-            element.click();
-
-            document.body.removeChild(element);
-        };
+    $scope.findSimilar = function(){
+        var formData = new FormData();
+        formData.append("file", $scope.file);
+        $http.post(host + '/request/findSimilar', formData, {
+            transformRequest: function (data, headersGetterFunction) {
+                return data;
+            },
+            headers: {'Content-Type': undefined},
+            accepts: "application/json; charset=utf-8"
+        }).success(function (data, status) {
+            alert("Success");
+        }).error(function (data, status) {
+            alert("Error");
+        });
     }
+
+
+
+
+    //$http.get(host + '/request/add').success(function (data, status) {
+    //    $scope.texData = data;
+    //}).error(function (data, status) {
+    //    //alert("Error ... " + status);
+    //});
+
 });
+
+app.directive("ngFileSelect",function(){
+
+    return {
+        link: function($scope,el){
+
+            el.bind("change", function(e){
+
+                $scope.file = (e.srcElement || e.target).files[0];
+                $scope.getFile();
+            })
+
+        }
+
+    }
+
+
+})

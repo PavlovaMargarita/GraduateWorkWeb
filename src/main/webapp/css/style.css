@@ -241,3 +241,14 @@ tr.red-color:hover{
 .button-glyphicon-calendar-height{
     height: 34px;
 }
+
+
+.imageclass {
+    width: auto;
+    display: inline-block;
+}
+
+.imageclass img {
+    width: 100%; /* Will shrink image to 30% of its original width */
+    height: auto;
+}?
